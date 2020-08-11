@@ -1,4 +1,5 @@
-const title = document.querySelector('h2');
+// const title = document.querySelector('h2');
+const title = document.querySelector('body');
 
 // #2-4
 // title.innerHTML = 'Hi! from JS';
@@ -7,12 +8,18 @@ const title = document.querySelector('h2');
 // document.title = 'I won toy now';
 // console.dir(document);
 
-// #2-5
-function handleResize() {
-  title.innerHTML = 'Im handleResize';
-}
+title.innerHTML = 'Hi! from JS';
+title.style.color = 'red';
+console.log(title);
+document.title = 'I won toy now';
+console.dir(document);
 
-title.addEventListener('resize', handleResize);
+// #2-5
+// function handleResize() {
+//   title.innerHTML = 'Im handleResize';
+// }
+
+// title.addEventListener('resize', handleResize);
 
 //#2-6
 // const BASE_COLOR = 'red';
@@ -27,9 +34,9 @@ title.addEventListener('resize', handleResize);
 //   }
 // }
 
-function init() {
-  title.style.color = BASE_COLOR;
-  title.addEventListener('click', handleClick);
-}
+// function init() {
+//   title.style.color = BASE_COLOR;
+//   title.addEventListener('click', handleClick);
+// }
 
-init();
+// init();
