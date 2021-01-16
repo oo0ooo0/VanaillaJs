@@ -1,5 +1,11 @@
 body {
   font-family: sans-serif;
+  background: #ecf0f1;
+  color: #34495e;
+}
+
+.btn {
+  cursor: pointer;
 }
 
 .clicked {
