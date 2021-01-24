@@ -6,21 +6,41 @@
     <link rel="stylesheet" href="src/styles.css" />
   </head>
   <body>
+
+    <div id="backGround"></div>
+
+    <div class="viewport">
     <div class="js-clock">
-      <h1>00:00:00</h1>
+      <h1 class="clock">00:00</h1>
     </div>
-    <form class="js-form form">
-      <input type="text" placeholder="What's your name?" />
+    <form class="js-form nameForm">
+      <input type="text" class="nameInput" placeholder="What is your name?" />
     </form>
     <h4 class="js-greetings greetings"></h4>
-    <form class="js-toDoForm">
-      <input type="text" placeholder="Write a to do"/>
+    <form class="form-container">
+    <h2>
+      TASK
+    </h2>
+    <input type="text" placeholder="add task" class="todo-input" />
     </form>
-    <ul class="js-toDoList">
-      
-    </ul>
-    <script src="src/index.js"></script>
-    <script src="src/gretting.js"></script>
-    <script src="src/todo.js"></script>
+    <div class="list-container">
+    <div class="list">
+      <h3>PENDING</h3>
+      <ul class="pending-list"></ul>
+    </div>
+    <div class="list">
+      <h3>FINISHED</h3>
+      <ul class="finished-list"></ul>
+    </div>
+    </div>
+    <span class="js-weather"></span>
+
+</div>
+
+      <script src="src/clock.js"></script>
+      <script src="src/bg.js"></script>
+      <script src="src/weather.js"></script>
+      <script  src="src/gretting.js"></script>
+      <script src="src/todo.js"></script>
   </body>
 </html>

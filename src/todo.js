@@ -1,54 +1,121 @@
-const toDoForm = document.querySelector('.js-toDoForm'),
-  toDoInput = toDoForm.querySelector('input'),
-  toDoList = document.querySelector('.js-toDoList');
+const PENDING = 'PENDING';
+const FINISHED = 'FINISHED';
+const listKey = [PENDING, FINISHED];
 
-const TODOS_LS = 'toDos';
+const todoForm = document.querySelector('.form-container');
+const todoInput = document.querySelector('.todo-input');
 
-const toDos = [];
+const pendingEl = document.querySelector('.pending-list');
+const finishedEl = document.querySelector('.finished-list');
 
-function saveToDos() {
-  localStorage.setItem(TODOS_LS, JSON.stringify(toDos));
-}
+const enter = ([h]) => h;
 
-function paintToDo(text) {
+const initId = () => {
+  let id = 0;
+  return () => id++;
+};
+const getId = initId();
+
+const iconObj = {
+  delete: '❌',
+  finished: '✅',
+  undo: '⏪',
+};
+
+const elList = {
+  PENDING: pendingEl,
+  FINISHED: finishedEl,
+};
+
+const dataList = {
+  PENDING: [],
+  FINISHED: [],
+};
+
+const saveLocalStorage = (type, list) => {
+  localStorage.setItem(type, JSON.stringify(list));
+};
+
+const buttonEvents = {
+  delete: (type, { id }) => {
+    const liEl = elList[type].children;
+    if (!liEl.length) return;
+
+    const li = enter(Array.from(liEl).filter((v) => Number(v.id) === id));
+    elList[type].removeChild(li);
+    dataList[type] = dataList[type].filter((v) => v.id !== id);
+    saveLocalStorage(type, dataList[type]);
+  },
+  finished: (type, { id, text }) => {
+    buttonEvents['delete'](type, { id });
+    createItem(FINISHED, { text });
+  },
+  undo: (type, { id, text }) => {
+    buttonEvents['delete'](type, { id });
+    createItem(PENDING, { text });
+  },
+};
+
+const createItem = (type, { text }) => {
+  const id = getId();
   const li = document.createElement('li');
-  const delBtn = document.createElement('button');
   const span = document.createElement('span');
-  const newId = toDos.length + 1;
-  delBtn.innerText = 'x';
-  span.innerText = text;
+  const buttonContainer = document.createElement('div');
+  const buttonList = type === PENDING ? ['finished', 'delete'] : ['undo', 'delete'];
+
+  const buttonEls = buttonList.map((key) => {
+    const button = document.createElement('button');
+    button.innerHTML = iconObj[key];
+    button.addEventListener('click', (e) => buttonEvents[key](type, { id, text }));
+    return button;
+  });
+
+  li.id = id;
+  span.innerHTML = text;
   li.appendChild(span);
-  li.appendChild(delBtn);
-  li.id = newId;
-  toDoList.appendChild(li);
-  const toDoObj = {
-    text: text,
-    id: newId,
-  };
-  toDos.push(toDoObj);
-  saveToDos();
-}
 
-function handleSubmit(event) {
-  event.preventDefault();
-  const currentValue = toDoInput.value;
-  paintToDo(currentValue);
-  toDoInput.value = '';
-}
+  buttonEls.forEach((v) => {
+    buttonContainer.appendChild(v);
+  });
+  li.appendChild(buttonContainer);
 
-function loadToDos() {
-  const loadToDos = localStorage.getItem(TODOS_LS);
-  if (loadToDos !== null) {
-    const parsedToDos = JSON.parse(loadToDos);
-    parsedToDos.forEach(function (toDo) {
-      paintToDo(toDo.text);
-    });
+  elList[type].appendChild(li);
+  dataList[type].push({ id, text });
+  saveLocalStorage(type, dataList[type]);
+};
+
+const handleSubmitTodo = (e) => {
+  e.preventDefault();
+  const { value: text } = todoInput;
+  if (text) {
+    createItem(PENDING, { text });
   }
-}
+  todoInput.value = '';
+};
 
-function init() {
-  loadToDos();
-  toDoForm.addEventListener('submit', handleSubmit);
-}
+const loadAllToDoList = () => {
+  listKey
+    .map((key) => {
+      return {
+        key,
+        list: localStorage.getItem(key),
+      };
+    })
+    .forEach(({ key, list }) => {
+      if (!list) return;
+      JSON.parse(list).forEach((item) => {
+        createItem(key, item);
+      });
+    });
+};
 
-init();
+const handleEvent = () => {
+  todoForm.addEventListener('submit', handleSubmitTodo);
+};
+
+const todoInit = () => {
+  loadAllToDoList();
+  handleEvent();
+};
+
+todoInit();

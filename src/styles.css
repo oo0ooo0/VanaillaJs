@@ -1,22 +1,119 @@
 body {
-  font-family: sans-serif;
-  background: #ecf0f1;
   color: #34495e;
+  font-family: Arial;
+  user-select: none;
 }
 
-.btn {
-  cursor: pointer;
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+#backGround {
+  margin: 0 auto;
+  width: 100%;
+  height: 100vh;
+  z-index: -1;
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  animation: fadeIn 0.5s linear;
+}
+
+.viewport {
+  z-index: 1;
+  padding: 30px;
+  margin: 30px;
+  position: relative;
 }
 
 .clicked {
   color: #7f8c8d;
 }
 
-.form,
+.nameForm,
 .greetings {
   display: none;
+  text-align: center;
 }
 
 .showing {
   display: block;
+}
+
+h2 {
+  margin-top: 50px;
+}
+
+ul {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
+
+li {
+  display: flex;
+  justify-content: space-between;
+}
+
+span {
+  font-size: 18px;
+  margin: 0 10px;
+  border-radius: 50%;
+}
+
+button {
+  margin: 0 5px;
+  padding: 0;
+  outline: none;
+  background: #fff;
+  cursor: pointer;
+  border: 0;
+}
+
+button:hover {
+  background: #f1f1f1;
+}
+
+input {
+  width: 50%;
+  min-width: 200px;
+  height: 30px;
+  border: 0;
+  border-bottom: 2px solid;
+  font-size: 15px;
+  align-self: center;
+  text-align: center;
+}
+
+input:focus {
+  outline: none;
+  border-color: #3f83f8;
+}
+
+.js-clock {
+  display: flex;
+  justify-content: center;
+}
+.form-container {
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+}
+
+.list-container {
+  display: flex;
+  justify-content: space-around;
+  padding-top: 50px;
+  text-align: center;
+}
+
+.js-weather {
+  position: absolute;
+  top: 10px;
+  right: 10px;
 }

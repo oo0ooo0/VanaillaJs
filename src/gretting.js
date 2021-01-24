@@ -1,5 +1,5 @@
-const form = document.querySelector('.js-form'),
-  input = form.querySelector('input'),
+const form = document.querySelector('.nameForm'),
+  input = form.querySelector('.nameInput'),
   greeting = document.querySelector('.js-greetings');
 
 const USER_LS = 'currentUser',
@@ -16,7 +16,7 @@ function handleSubmit(event) {
   saveName(currentValue);
 }
 
-function askFormName() {
+function askForName() {
   form.classList.add(SHOWING_CN);
   form.addEventListener('submit', handleSubmit);
 }
@@ -30,7 +30,7 @@ function paintGreeting(text) {
 function loadName() {
   const currentUser = localStorage.getItem(USER_LS);
   if (currentUser === null) {
-    askFormName();
+    askForName();
   } else {
     paintGreeting(currentUser);
   }
